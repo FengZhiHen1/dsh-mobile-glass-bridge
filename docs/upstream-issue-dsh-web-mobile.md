@@ -85,6 +85,5 @@ body[data-dsh-bg] [data-mobile-nav="frame"] [data-phase] header {
 ### 关联
 
 - #192：同一个 `--dsw-specific-sidebar-fill` 声明。该次成因为变量不存在导致写死浅色；本次为变量被另一插件置空。
-- 同时向 background 仓库提一条同类问题，任一仓库修复均可解除该现象。
 
 > 本 Issue 由 AI 助手协助整理，现象与代码引用已由提交者在本机核对。
