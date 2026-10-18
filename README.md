@@ -2,7 +2,7 @@
 
 > **状态：临时件（2026-10-18 起）**
 > 这不是功能插件，是 DSH 0.2.1-rc.2 上两个第三方插件之间的兼容补丁。根因归属上游 `dsh-web-mobile`（它把壁纸插件置空的「框架令牌」当作面板底色）。**上游修好后本仓库即可归档删除**；在此之前只应装在 test 实例或显式选择它的 profile 里，不要默认挂进稳定环境。
-> 上游 issue 草稿：[`docs/upstream-issue-dsh-web-mobile.md`](docs/upstream-issue-dsh-web-mobile.md)。
+> 上游 issue 草稿：[`docs/upstream-issue-dsh-web-mobile.md`](docs/upstream-issue-dsh-web-mobile.md)、[`docs/upstream-issue-deepseek-harness-background.md`](docs/upstream-issue-deepseek-harness-background.md)。
 
 把 `dsh-web-mobile` 的**左侧抽屉**和**会话顶栏**（浅色/深色都覆盖），在 `deepseek-harness-background` 开启壁纸时补回可读的玻璃底色。
 
