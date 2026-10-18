@@ -22,8 +22,8 @@
 ### 症状
 
 1. 打开左侧抽屉时，抽屉**没有底色**：背后的会话内容、气泡和 40% 遮罩直接透上来，抽屉文字与背景内容叠在一起，几乎不可读。
-2. 深色主题下会话顶栏同样失去底色，顶栏控件直接落在壁纸插画上。
-3. 与壁纸插件的「面板不透明度」滑块无关：0%–100% 都不恢复。那两处拿到的令牌是 `transparent`，不是"调低的不透明度"。
+2. 会话顶栏失去底色：深色档是被上面那条规则覆盖成 `transparent`；浅色档上游根本没有对应规则，而宿主 `.header` 本身不画底色（只有一条下边框），底色由背后的会话根节点提供，所以在壁纸下同样透空。手机档的消息滚动区会从顶栏下方穿过，透空时能看到文字滚过顶栏。
+3. 与壁纸插件的「面板不透明度」滑块无关：0%–100% 都不恢复。那几处拿到的令牌是 `transparent`，不是"调低的不透明度"。
 
 ### 最小复现（不装壁纸插件也能看到）
 
@@ -53,6 +53,7 @@ body[data-dsh-bg] {
 | --- | --- | --- |
 | 抽屉列 | `src/client/styles/layout.css.ts:180`（`[data-mobile-nav="frame"] > :first-child`） | `background: var(--dsw-specific-sidebar-fill, #f9fafb)` |
 | 深色顶栏 | `src/client/styles/layout.css.ts:1146`（`… [data-phase] header`） | `background-color: var(--dsw-alias-bg-base, #151517) !important` |
+| 浅色顶栏 | 无规则 | 宿主 `ui-conversation` 的 `.header` 只有 `border-bottom`，没有 `background`；底色来自会话根节点的 `--dsw-alias-bg-base` |
 
 顶栏那段的注释写明了前提：*实测 page/body 与 frame 都是 `#151517`（`--dsw-alias-bg-base`）*。壁纸场景下这个前提失效——令牌是 `transparent`，于是"把头部底色并到页面底色"的意图退化成"没有底色"。
 
@@ -73,13 +74,14 @@ body[data-dsh-bg] [data-mobile-nav="frame"] > :first-child {
   background: var(--dsw-alias-bg-layer-1, #fff);
 }
 
-/* 深色顶栏 */
-body[data-dsh-bg][data-ds-dark-theme] [data-mobile-nav="frame"] [data-phase] header {
+/* 顶栏：把现有那条只在深色档生效的规则改成两种主题都覆盖
+   （原有选择器特异性 (0,3,2)，加 --dsh-bg 后为 (0,4,2)，不会被别的 !important 反压） */
+body[data-dsh-bg] [data-mobile-nav="frame"] [data-phase] header {
   background-color: var(--dsw-alias-bg-layer-1, #fff) !important;
 }
 ```
 
-`--dsw-alias-bg-layer-1` 是本仓库已有的令牌（`panel-ghost` 那条规则就在用），且壁纸插件不覆盖它，因此桌面档与手机档在这两处会一致。
+`--dsw-alias-bg-layer-1` 是本仓库已有的令牌（`panel-ghost` 那条规则就在用），且壁纸插件不覆盖它，因此浅色/深色、桌面档与手机档在这几处会一致。
 
 **方案 B（保留毛玻璃观感）**：改用壁纸插件的第三方玻璃注册表，让填充与模糊跟随用户的面板不透明度：
 

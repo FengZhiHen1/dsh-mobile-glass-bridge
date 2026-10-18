@@ -16,7 +16,10 @@
  *     the 40% backdrop show straight through the sidebar content;
  *   - the dark-theme session header (layout.css.ts:1146) paints
  *     `var(--dsw-alias-bg-base) !important`, so the top bar loses the ground
- *     the host still gives it on desktop.
+ *     the host still gives it on desktop. In light theme the host header paints
+ *     no background at all (the conversation root behind it carries the token),
+ *     so it is see-through under a wallpaper as well, and on the phone tier the
+ *     message scroll box runs underneath the bar.
  *
  * Both plugins are unaware of each other (neither references the other's
  * marker), so nothing in either package covers this. The bridge paints a
@@ -71,17 +74,18 @@ html[data-ds-dark-theme] body[data-dsh-bg] {
     backdrop-filter: blur(var(--bg-glass-blur, 16px)) saturate(1.4);
   }
 
-  /* Dark-theme session header. dsh-web-mobile's rule carries !important at
-     (0,3,2); this one is (0,4,2) so it wins on specificity rather than on
-     stylesheet order (two plugin sheets have no guaranteed order). Light theme
-     is untouched: the mobile rule only exists for dark, and the host header
-     keeps its own opaque layer colour there.
-     No backdrop-filter here on purpose: the header has no transform, so a
-     backdrop-filter would make it the containing block for any fixed-position
-     descendant (a mode menu rendered in place would jump to the header). The
-     drawer already owns a transform, so its filter adds no such risk. */
-  body[data-dsh-bg][data-ds-dark-theme] [data-mobile-nav="frame"] [data-phase] header,
-  html[data-ds-dark-theme] body[data-dsh-bg] [data-mobile-nav="frame"] [data-phase] header {
+  /* Session header, both themes. The host header paints no background of its
+     own (ui-conversation .header only draws a bottom border; the conversation
+     root behind it carries --dsw-alias-bg-base), so under a wallpaper the top
+     band is see-through in light theme too — and on the phone tier the message
+     scroll box runs underneath it, which is exactly what the dark-layer fill is
+     there to mask. In dark theme dsh-web-mobile also paints that same zeroed
+     token, at (0,3,2) !important; one :root-prefixed selector keeps this rule
+     at (0,4,2) so it wins there and is the only candidate in light.
+     No backdrop-filter: the header has no transform, so a filter would make it
+     the containing block for fixed-position descendants (a mode menu rendered
+     in place would jump to the header). */
+  :root body[data-dsh-bg] [data-mobile-nav="frame"] [data-phase] header {
     background-color: var(--dsh-mobile-glass-fill) !important;
   }
 }

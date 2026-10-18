@@ -1,8 +1,8 @@
 {
   "name": "dsh-mobile-glass-bridge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
-  "description": "Compatibility bridge: gives dsh-web-mobile's drawer and dark session header a readable glass ground while deepseek-harness-background has a wallpaper active",
+  "description": "Compatibility bridge: gives dsh-web-mobile's drawer and session header a readable glass ground while deepseek-harness-background has a wallpaper active",
   "keywords": [
     "dsh",
     "dsh-plugin",
