@@ -1,7 +1,7 @@
 # 上游 issue 草稿 — dsh-web-mobile
 
 > 目标仓库：https://github.com/mexiaosqwq/dsh-web-mobile
-> 状态：待提交
+> 状态：**已提交** — https://github.com/mexiaosqwq/dsh-web-mobile/issues/228 （2026-10-18，OPEN）
 > 依据：`github-expert` → `references/collaboration/issue.md`
 
 ---
