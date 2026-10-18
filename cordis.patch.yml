@@ -1,0 +1,7 @@
+# Compatibility bridge between two third-party plugins:
+#   - dsh-web-mobile (mobile drawer + phone-tier header)
+#   - deepseek-harness-background (wallpaper; zeroes the two frame tokens)
+# One client-only row: the host half is an empty apply so the row exists.
+- insert:
+    - id: dsh-mobile-glass-bridge
+      name: 'dsh-mobile-glass-bridge'

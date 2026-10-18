@@ -1,0 +1,41 @@
+{
+  "name": "dsh-mobile-glass-bridge",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Compatibility bridge: gives dsh-web-mobile's drawer and dark session header a readable glass ground while deepseek-harness-background has a wallpaper active",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh-web-mobile",
+    "wallpaper"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FengZhiHen1/dsh-mobile-glass-bridge.git"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./client": "./src/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src/",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  }
+}
